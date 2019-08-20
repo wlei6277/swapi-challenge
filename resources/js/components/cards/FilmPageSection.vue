@@ -93,6 +93,6 @@
 
   #tooltip-heading {
     color: rgb(255,255,255);
-    margin: 3px 0px;
+    margin: 0px 0px 3px 0px;
   } 
 </style>

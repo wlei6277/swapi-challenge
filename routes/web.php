@@ -11,8 +11,13 @@
 |
 */
 
+// Route to display the landing page where the SPA is bound
 Route::get('/', function () {
     return view('welcome');
 });
+
+// Route to request all film records in the database
 Route::get('/films', 'FilmController@index');
+
+// Route to enable a user to favourite / un-favourite a film
 Route::put('/films/{film}','FilmController@update');
