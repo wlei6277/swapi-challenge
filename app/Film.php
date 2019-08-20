@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class Film extends Model
 {
-    protected $fillable = [
+    public $fillable = [
         'episode_id',
         'url',
         'title',
@@ -25,10 +25,6 @@ class Film extends Model
             },
             ARRAY_FILTER_USE_KEY);
         return $filteredValues;
-    }
-
-    public function test() {
-        return "testing";
     }
 
     public function characters () {

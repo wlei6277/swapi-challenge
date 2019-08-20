@@ -8,6 +8,7 @@ use App\Specie;
 use App\Vehicle;
 use App\Starship;
 use App\Planet;
+use App\FilteredFillables;
 use Illuminate\Console\Command;
 
 class fetchData extends Command
@@ -75,7 +76,7 @@ class fetchData extends Command
         return $decodedData;   
     }
 
-    // update_database inserts the provided swapi resource into the database
+    // update_database inserts the provided swapi resource into the database and associates it to the film resource
     public function update_database($resource, $type, $index, $film = "") {
         $savedResource = null;
         if ($type === "film") {

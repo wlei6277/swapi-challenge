@@ -13,7 +13,6 @@
                     v-model="search"
                 >
             </div>
-            <!-- <p class="help">Type here to filter films</p> -->
         </div>
         <film-card 
             v-for="(film, index) in filteredFilms" 
