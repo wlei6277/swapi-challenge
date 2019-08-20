@@ -16,16 +16,6 @@ class Film extends Model
         'opening_crawl',
         'favourited'
     ];
-    
-    public function filterFillableValues($data)
-    {
-        $filteredValues = array_filter($data,
-            function ($key) {
-                return in_array($key, $this->fillable);
-            },
-            ARRAY_FILTER_USE_KEY);
-        return $filteredValues;
-    }
 
     public function characters () {
         return $this->belongsToMany(Character::class);

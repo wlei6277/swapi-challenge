@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class Starship extends Model
 {
-    protected $fillable = [
+    public $fillable = [
         'url',
         'name',
         'model',
@@ -23,15 +23,6 @@ class Starship extends Model
         'consumables'
     ];
     
-    public function filterFillableValues($data)
-    {
-        $filteredValues = array_filter($data,
-            function ($key) {
-                return in_array($key, $this->fillable);
-            },
-            ARRAY_FILTER_USE_KEY);
-        return $filteredValues;
-    }
     public function films() {
         return $this->belongsToMany(Film::class);
     }

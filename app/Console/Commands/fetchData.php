@@ -81,29 +81,39 @@ class fetchData extends Command
         $savedResource = null;
         if ($type === "film") {
             $filmModel = new Film();
-            $savedResource = Film::updateOrCreate($filmModel->filterFillableValues($resource));
+            $savedResource = Film::updateOrCreate($this->filterFillableValues($resource, $filmModel->fillable));
         } elseif($type === "characters") {
             $characterModel = new Character();
-            $savedResource = Character::updateOrCreate($characterModel->filterFillableValues($resource));
+            $savedResource = Character::updateOrCreate($this->filterFillableValues($resource, $characterModel->fillable));
             $film->characters()->attach($savedResource->id);
         } else if($type === "planets") {
             $planetModel = new Planet();
-            $savedResource = Planet::updateOrCreate($planetModel->filterFillableValues($resource));
+            $savedResource = Planet::updateOrCreate($this->filterFillableValues($resource, $planetModel->fillable));
             $film->planets()->attach($savedResource->id);
         } else if($type === "species") {
             $specieModel = new Specie();
-            $savedResource = Specie::updateOrCreate($specieModel->filterFillableValues($resource));
+            $savedResource = Specie::updateOrCreate($this->filterFillableValues($resource, $specieModel->fillable));
             $film->species()->attach($savedResource->id);
         } else if ($type === "starships") {
             $starshipModel = new Starship();
-            $savedResource = Starship::updateOrCreate($starshipModel->filterFillableValues($resource));
+            $savedResource = Starship::updateOrCreate($this->filterFillableValues($resource, $starshipModel->fillable));
             $film->starships()->attach($savedResource->id);
         } else if ($type === "vehicles") {
             $vehicleModel = new Vehicle();
-            $savedResource = Vehicle::updateOrCreate($vehicleModel->filterFillableValues($resource));
+            $savedResource = Vehicle::updateOrCreate($this->filterFillableValues($resource, $vehicleModel->fillable));
             $film->vehicles()->attach($savedResource->id);
         }
         echo "Created / updated ", $type, " ", $index + 1 , "\n";
         return $savedResource;
+    }
+    
+    public function filterFillableValues($data, $fillable)
+    {
+        $filteredValues = array_filter($data,
+            function ($key) use($fillable) {
+                return in_array($key, $fillable);
+            },
+            ARRAY_FILTER_USE_KEY);
+        return $filteredValues;
     }
 }
