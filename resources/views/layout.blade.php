@@ -7,7 +7,7 @@
   @yield('styles')
   <title>SWAPI Challenge</title>
 </head>
-<body>
+<body >
   @yield('content')
   @yield('scripts')
 </body>

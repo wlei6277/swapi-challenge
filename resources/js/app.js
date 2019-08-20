@@ -7,6 +7,11 @@
 require('./bootstrap');
 
 import router from "./routes";
+import store from "./store";
+
+
+
+// import store from "./store";
 
 /**
  * The following block of code may be used to automatically register your
@@ -20,6 +25,12 @@ import router from "./routes";
 // files.keys().map(key => Vue.component(key.split('/').pop().split('.')[0], files(key).default));
 
 Vue.component('home', require('./components/Home.vue').default);
+Vue.component('bulma-nav-bar', require('./components/NavBar.vue').default);
+Vue.component('film-card', require('./components/cards/Film.vue').default);
+Vue.component('film-page', require('./components/FilmPage.vue').default);
+Vue.component('bulma-section', require('./components/BulmaSection.vue').default);
+Vue.component('film-section', require('./components/cards/FilmPageSection.vue').default);
+Vue.component('modal', require('./components/Modal.vue').default);
 
 /**
  * Next, we will create a fresh Vue application instance and attach it to
@@ -27,7 +38,13 @@ Vue.component('home', require('./components/Home.vue').default);
  * or customize the JavaScript scaffolding to fit your unique needs.
  */
 
+window.Event = new Vue();
+
 const app = new Vue({
     el: '#app',
-    router
+    router,
+    store,
+    mounted() {
+        this.$store.dispatch('fetchFilms');
+    }
 });

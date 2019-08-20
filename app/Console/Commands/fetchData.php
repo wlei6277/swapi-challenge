@@ -4,6 +4,10 @@ namespace App\Console\Commands;
 
 use App\Film;
 use App\Character;
+use App\Specie;
+use App\Vehicle;
+use App\Starship;
+use App\Planet;
 use Illuminate\Console\Command;
 
 class fetchData extends Command
@@ -46,14 +50,18 @@ class fetchData extends Command
         foreach($films as $index=>$film) {
             // save each film in the database
             $savedFilm = $this->update_database($film, "film", $index);
-            // loop through the character urls for the fetched film
-            foreach($film["characters"] as $index=>$characterUrl) {
-                // fetch the character from the swapi
-                $character = $this->fetch_data($characterUrl);
-                // save it into the database
-                $savedCharacter = $this->update_database($character, "character", $index);
-                // attach the character to the film to enable it to be eager loaded on the index page
-                $savedFilm->characters()->attach($savedCharacter->id);
+
+            $resources = ["characters", "planets", "starships", "vehicles", "species"];
+
+            // loop through each of the resource urls for the fetched film
+            // fetch the resource from the swapi
+            // save it into the database
+            // attach the resource to the film to enable it to be eager loaded on the index page
+            foreach($resources as $resource) {
+                foreach($film[$resource] as $index => $resourceUrl) {
+                    $fetchedResource = $this->fetch_data($resourceUrl);
+                    $savedResource = $this->update_database($fetchedResource, $resource, $index, $savedFilm);
+                }
             }
         }
     }
@@ -68,15 +76,33 @@ class fetchData extends Command
     }
 
     // update_database inserts the provided swapi resource into the database
-    public function update_database($resource, $type, $index) {
+    public function update_database($resource, $type, $index, $film = "") {
+        $savedResource = null;
         if ($type === "film") {
             $filmModel = new Film();
             $savedResource = Film::updateOrCreate($filmModel->filterFillableValues($resource));
-        } elseif ($type === "character") {
+        } elseif($type === "characters") {
             $characterModel = new Character();
             $savedResource = Character::updateOrCreate($characterModel->filterFillableValues($resource));
+            $film->characters()->attach($savedResource->id);
+        } else if($type === "planets") {
+            $planetModel = new Planet();
+            $savedResource = Planet::updateOrCreate($planetModel->filterFillableValues($resource));
+            $film->planets()->attach($savedResource->id);
+        } else if($type === "species") {
+            $specieModel = new Specie();
+            $savedResource = Specie::updateOrCreate($specieModel->filterFillableValues($resource));
+            $film->species()->attach($savedResource->id);
+        } else if ($type === "starships") {
+            $starshipModel = new Starship();
+            $savedResource = Starship::updateOrCreate($starshipModel->filterFillableValues($resource));
+            $film->starships()->attach($savedResource->id);
+        } else if ($type === "vehicles") {
+            $vehicleModel = new Vehicle();
+            $savedResource = Vehicle::updateOrCreate($vehicleModel->filterFillableValues($resource));
+            $film->vehicles()->attach($savedResource->id);
         }
-        echo 'Sucessfully updated / created ', $type,' ', $index+1, "\n";
+        echo "Created / updated ", $type, " ", $index + 1 , "\n";
         return $savedResource;
     }
 }

@@ -41,7 +41,8 @@ if (token) {
 /*
  * Loading vue and vue-router
 */
-window.Vue = require('vue');
+import Vue from 'vue';
+window.Vue = Vue;
 import VueRouter from 'vue-router';
 Vue.use(VueRouter);
 

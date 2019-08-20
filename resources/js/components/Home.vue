@@ -1,23 +1,29 @@
 <template>
-    <div class="container">
-        <div class="row justify-content-center">
-            <div class="col-md-8">
-                <div class="card">
-                    <div class="card-header">Example Component</div>
-
-                    <div class="card-body">
-                        I'm an example component.
-                    </div>
-                </div>
-            </div>
-        </div>
+    <div>
+    <bulma-section>
+        <template slot="title">Films</template>
+        <template slot="sub-heading">A brief description of the Star Wars films!</template>
+        <film-card 
+            v-for="(film, index) in films" 
+            v-bind:key="film.title + index"
+            :filmRecord="film"
+            :index="index"
+        />
+        <modal v-show="modalActive"></modal>
+    </bulma-section>
     </div>
 </template>
 
 <script>
     export default {
-        mounted() {
-            console.log('Component mounted.')
+        computed: {
+            films() {
+                return this.$store.state.films;
+            },
+            modalActive() {
+                return this.$store.state.modal;
+            }
         }
     }
 </script>
+
