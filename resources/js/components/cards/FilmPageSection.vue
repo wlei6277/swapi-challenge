@@ -52,13 +52,14 @@
   /* Tooltip text */
   .tooltip .tooltiptext {
     visibility: hidden;
-    width: 200px;
+      
     background-color: #555;
     color: rgb(255, 255, 255);
     text-align: left;
     font-size: 13px;
     padding: 10px;
     border-radius: 6px;
+    white-space: nowrap;
 
     /* Position the tooltip text */
     position: absolute;

@@ -25,7 +25,7 @@ import store from "./store";
 // files.keys().map(key => Vue.component(key.split('/').pop().split('.')[0], files(key).default));
 
 Vue.component('home', require('./components/Home.vue').default);
-Vue.component('bulma-nav-bar', require('./components/NavBar.vue').default);
+Vue.component('bulma-nav-bar', require('./components/nav/NavBar.vue').default);
 Vue.component('film-card', require('./components/cards/Film.vue').default);
 Vue.component('film-page', require('./components/FilmPage.vue').default);
 Vue.component('bulma-section', require('./components/BulmaSection.vue').default);

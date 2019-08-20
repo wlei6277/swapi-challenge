@@ -3,8 +3,20 @@
     <bulma-section>
         <template slot="title">Films</template>
         <template slot="sub-heading">A brief description of the Star Wars films!</template>
+        <div class="field">
+            <label class="label">Search Films</label>
+            <div class="control">
+                <input 
+                    class="input" 
+                    type="text" 
+                    placeholder="Type here to search for your film"
+                    v-model="search"
+                >
+            </div>
+            <!-- <p class="help">Type here to filter films</p> -->
+        </div>
         <film-card 
-            v-for="(film, index) in films" 
+            v-for="(film, index) in filteredFilms" 
             v-bind:key="film.title + index"
             :filmRecord="film"
             :index="index"
@@ -16,9 +28,18 @@
 
 <script>
     export default {
+        data() {
+            return {
+                search: ''
+            }
+        },
         computed: {
-            films() {
-                return this.$store.state.films;
+            filteredFilms() {
+                return this.$store.state.films.filter((film) => {
+                    let title = film.title.toLowerCase();
+                    let search = this.search.toLowerCase()
+                    return title.match(search);
+                })
             },
             modalActive() {
                 return this.$store.state.modal;

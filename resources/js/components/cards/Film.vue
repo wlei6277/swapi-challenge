@@ -22,7 +22,7 @@
     </div>
     <footer class="card-footer">
       <router-link :to="filmUrl" class="card-footer-item">
-        <span @click="onDetailsClick">Details</span> 
+        <span >Details</span> 
       </router-link>
     </footer>
   </div>
@@ -57,9 +57,6 @@
           // removing un-favourited film title in local storage as per requirements
           window.localStorage.removeItem(film.title);
         }
-      },
-      onDetailsClick() {
-        // this.$store.commit('setFilm', this.film);
       }
     },
     created() {

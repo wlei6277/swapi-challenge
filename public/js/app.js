@@ -1918,10 +1918,35 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
+  data: function data() {
+    return {
+      search: ''
+    };
+  },
   computed: {
-    films: function films() {
-      return this.$store.state.films;
+    filteredFilms: function filteredFilms() {
+      var _this = this;
+
+      return this.$store.state.films.filter(function (film) {
+        var title = film.title.toLowerCase();
+
+        var search = _this.search.toLowerCase();
+
+        return title.match(search);
+      });
     },
     modalActive: function modalActive() {
       return this.$store.state.modal;
@@ -2038,8 +2063,6 @@ __webpack_require__.r(__webpack_exports__);
         // removing un-favourited film title in local storage as per requirements
         window.localStorage.removeItem(film.title);
       }
-    },
-    onDetailsClick: function onDetailsClick() {// this.$store.commit('setFilm', this.film);
     }
   },
   created: function created() {
@@ -6556,7 +6579,7 @@ exports = module.exports = __webpack_require__(/*! ../../../../node_modules/css-
 
 
 // module
-exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n   /* Tooltip container */\n.tooltip[data-v-b7ff63aa] {\n  position: relative;\n  display: inline-block;\n  border-bottom: 1px dotted rgb(0,0,0); /* If you want dots under the hoverable text */\n}\n\n/* Tooltip text */\n.tooltip .tooltiptext[data-v-b7ff63aa] {\n  visibility: hidden;\n  width: 200px;\n  background-color: #555;\n  color: rgb(255, 255, 255);\n  text-align: left;\n  font-size: 13px;\n  padding: 10px;\n  border-radius: 6px;\n\n  /* Position the tooltip text */\n  position: absolute;\n  z-index: 1;\n  bottom: 125%;\n  left: 50%;\n  margin-left: -60px;\n\n  /* Fade in tooltip */\n  opacity: 0;\n  transition: opacity 0.3s;\n}\n\n/* Tooltip arrow */\n.tooltip .tooltiptext[data-v-b7ff63aa]::after {\n  content: \"\";\n  position: absolute;\n  top: 100%;\n  left: 50%;\n  margin-left: -5px;\n  border-width: 5px;\n  border-style: solid;\n  border-color: #555 transparent transparent transparent;\n}\n\n/* Show the tooltip text when you mouse over the tooltip container */\n.tooltip:hover .tooltiptext[data-v-b7ff63aa] {\n  visibility: visible;\n  opacity: 1;\n}\n#tooltip-heading[data-v-b7ff63aa] {\n  color: rgb(255,255,255);\n  margin: 3px 0px;\n} \n", ""]);
+exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n   /* Tooltip container */\n.tooltip[data-v-b7ff63aa] {\n  position: relative;\n  display: inline-block;\n  border-bottom: 1px dotted rgb(0,0,0); /* If you want dots under the hoverable text */\n}\n\n/* Tooltip text */\n.tooltip .tooltiptext[data-v-b7ff63aa] {\n  visibility: hidden;\n    \n  background-color: #555;\n  color: rgb(255, 255, 255);\n  text-align: left;\n  font-size: 13px;\n  padding: 10px;\n  border-radius: 6px;\n  white-space: nowrap;\n\n  /* Position the tooltip text */\n  position: absolute;\n  z-index: 1;\n  bottom: 125%;\n  left: 50%;\n  margin-left: -60px;\n\n  /* Fade in tooltip */\n  opacity: 0;\n  transition: opacity 0.3s;\n}\n\n/* Tooltip arrow */\n.tooltip .tooltiptext[data-v-b7ff63aa]::after {\n  content: \"\";\n  position: absolute;\n  top: 100%;\n  left: 50%;\n  margin-left: -5px;\n  border-width: 5px;\n  border-style: solid;\n  border-color: #555 transparent transparent transparent;\n}\n\n/* Show the tooltip text when you mouse over the tooltip container */\n.tooltip:hover .tooltiptext[data-v-b7ff63aa] {\n  visibility: visible;\n  opacity: 1;\n}\n#tooltip-heading[data-v-b7ff63aa] {\n  color: rgb(255,255,255);\n  margin: 3px 0px;\n} \n", ""]);
 
 // exports
 
@@ -38259,7 +38282,38 @@ var render = function() {
             _vm._v("A brief description of the Star Wars films!")
           ]),
           _vm._v(" "),
-          _vm._l(_vm.films, function(film, index) {
+          _c("div", { staticClass: "field" }, [
+            _c("label", { staticClass: "label" }, [_vm._v("Search Films")]),
+            _vm._v(" "),
+            _c("div", { staticClass: "control" }, [
+              _c("input", {
+                directives: [
+                  {
+                    name: "model",
+                    rawName: "v-model",
+                    value: _vm.search,
+                    expression: "search"
+                  }
+                ],
+                staticClass: "input",
+                attrs: {
+                  type: "text",
+                  placeholder: "Type here to search for your film"
+                },
+                domProps: { value: _vm.search },
+                on: {
+                  input: function($event) {
+                    if ($event.target.composing) {
+                      return
+                    }
+                    _vm.search = $event.target.value
+                  }
+                }
+              })
+            ])
+          ]),
+          _vm._v(" "),
+          _vm._l(_vm.filteredFilms, function(film, index) {
             return _c("film-card", {
               key: film.title + index,
               attrs: { filmRecord: film, index: index }
@@ -38328,77 +38382,6 @@ var render = function() {
   ])
 }
 var staticRenderFns = []
-render._withStripped = true
-
-
-
-/***/ }),
-
-/***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/NavBar.vue?vue&type=template&id=5dd24bca&":
-/*!*********************************************************************************************************************************************************************************************************!*\
-  !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/NavBar.vue?vue&type=template&id=5dd24bca& ***!
-  \*********************************************************************************************************************************************************************************************************/
-/*! exports provided: render, staticRenderFns */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "render", function() { return render; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return staticRenderFns; });
-var render = function() {
-  var _vm = this
-  var _h = _vm.$createElement
-  var _c = _vm._self._c || _h
-  return _c(
-    "nav",
-    {
-      staticClass: "navbar is-link is-fixed-top",
-      attrs: { role: "navigation", "aria-label": "main navigation" }
-    },
-    [
-      _c(
-        "div",
-        { staticClass: "navbar-brand" },
-        [
-          _c(
-            "router-link",
-            { staticClass: "navbar-item", attrs: { to: "/" } },
-            [_vm._t("home-button-img")],
-            2
-          ),
-          _vm._v(" "),
-          _vm._m(0)
-        ],
-        1
-      )
-    ]
-  )
-}
-var staticRenderFns = [
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c(
-      "a",
-      {
-        staticClass: "navbar-burger",
-        attrs: {
-          role: "button",
-          "aria-label": "menu",
-          "aria-expanded": "false"
-        }
-      },
-      [
-        _c("span", { attrs: { "aria-hidden": "true" } }),
-        _vm._v(" "),
-        _c("span", { attrs: { "aria-hidden": "true" } }),
-        _vm._v(" "),
-        _c("span", { attrs: { "aria-hidden": "true" } })
-      ]
-    )
-  }
-]
 render._withStripped = true
 
 
@@ -38495,11 +38478,7 @@ var render = function() {
           _c(
             "router-link",
             { staticClass: "card-footer-item", attrs: { to: _vm.filmUrl } },
-            [
-              _c("span", { on: { click: _vm.onDetailsClick } }, [
-                _vm._v("Details")
-              ])
-            ]
+            [_c("span", [_vm._v("Details")])]
           )
         ],
         1
@@ -38578,6 +38557,77 @@ var render = function() {
   )
 }
 var staticRenderFns = []
+render._withStripped = true
+
+
+
+/***/ }),
+
+/***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/nav/NavBar.vue?vue&type=template&id=38d5e5f2&":
+/*!*************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/nav/NavBar.vue?vue&type=template&id=38d5e5f2& ***!
+  \*************************************************************************************************************************************************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "render", function() { return render; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return staticRenderFns; });
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c(
+    "nav",
+    {
+      staticClass: "navbar is-link is-fixed-top",
+      attrs: { role: "navigation", "aria-label": "main navigation" }
+    },
+    [
+      _c(
+        "div",
+        { staticClass: "navbar-brand" },
+        [
+          _c(
+            "router-link",
+            { staticClass: "navbar-item", attrs: { to: "/" } },
+            [_vm._t("home-button-img")],
+            2
+          ),
+          _vm._v(" "),
+          _vm._m(0)
+        ],
+        1
+      )
+    ]
+  )
+}
+var staticRenderFns = [
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c(
+      "a",
+      {
+        staticClass: "navbar-burger",
+        attrs: {
+          role: "button",
+          "aria-label": "menu",
+          "aria-expanded": "false"
+        }
+      },
+      [
+        _c("span", { attrs: { "aria-hidden": "true" } }),
+        _vm._v(" "),
+        _c("span", { attrs: { "aria-hidden": "true" } }),
+        _vm._v(" "),
+        _c("span", { attrs: { "aria-hidden": "true" } })
+      ]
+    )
+  }
+]
 render._withStripped = true
 
 
@@ -54651,7 +54701,7 @@ __webpack_require__(/*! ./bootstrap */ "./resources/js/bootstrap.js");
 // files.keys().map(key => Vue.component(key.split('/').pop().split('.')[0], files(key).default));
 
 Vue.component('home', __webpack_require__(/*! ./components/Home.vue */ "./resources/js/components/Home.vue")["default"]);
-Vue.component('bulma-nav-bar', __webpack_require__(/*! ./components/NavBar.vue */ "./resources/js/components/NavBar.vue")["default"]);
+Vue.component('bulma-nav-bar', __webpack_require__(/*! ./components/nav/NavBar.vue */ "./resources/js/components/nav/NavBar.vue")["default"]);
 Vue.component('film-card', __webpack_require__(/*! ./components/cards/Film.vue */ "./resources/js/components/cards/Film.vue")["default"]);
 Vue.component('film-page', __webpack_require__(/*! ./components/FilmPage.vue */ "./resources/js/components/FilmPage.vue")["default"]);
 Vue.component('bulma-section', __webpack_require__(/*! ./components/BulmaSection.vue */ "./resources/js/components/BulmaSection.vue")["default"]);
@@ -55007,59 +55057,6 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
-/***/ "./resources/js/components/NavBar.vue":
-/*!********************************************!*\
-  !*** ./resources/js/components/NavBar.vue ***!
-  \********************************************/
-/*! exports provided: default */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _NavBar_vue_vue_type_template_id_5dd24bca___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./NavBar.vue?vue&type=template&id=5dd24bca& */ "./resources/js/components/NavBar.vue?vue&type=template&id=5dd24bca&");
-/* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
-
-var script = {}
-
-
-/* normalize component */
-
-var component = Object(_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_1__["default"])(
-  script,
-  _NavBar_vue_vue_type_template_id_5dd24bca___WEBPACK_IMPORTED_MODULE_0__["render"],
-  _NavBar_vue_vue_type_template_id_5dd24bca___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"],
-  false,
-  null,
-  null,
-  null
-  
-)
-
-/* hot reload */
-if (false) { var api; }
-component.options.__file = "resources/js/components/NavBar.vue"
-/* harmony default export */ __webpack_exports__["default"] = (component.exports);
-
-/***/ }),
-
-/***/ "./resources/js/components/NavBar.vue?vue&type=template&id=5dd24bca&":
-/*!***************************************************************************!*\
-  !*** ./resources/js/components/NavBar.vue?vue&type=template&id=5dd24bca& ***!
-  \***************************************************************************/
-/*! exports provided: render, staticRenderFns */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_NavBar_vue_vue_type_template_id_5dd24bca___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../node_modules/vue-loader/lib??vue-loader-options!./NavBar.vue?vue&type=template&id=5dd24bca& */ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/NavBar.vue?vue&type=template&id=5dd24bca&");
-/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_NavBar_vue_vue_type_template_id_5dd24bca___WEBPACK_IMPORTED_MODULE_0__["render"]; });
-
-/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_NavBar_vue_vue_type_template_id_5dd24bca___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
-
-
-
-/***/ }),
-
 /***/ "./resources/js/components/cards/Film.vue":
 /*!************************************************!*\
   !*** ./resources/js/components/cards/Film.vue ***!
@@ -55211,6 +55208,59 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_FilmPageSection_vue_vue_type_template_id_b7ff63aa_scoped_true___WEBPACK_IMPORTED_MODULE_0__["render"]; });
 
 /* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_FilmPageSection_vue_vue_type_template_id_b7ff63aa_scoped_true___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
+
+
+
+/***/ }),
+
+/***/ "./resources/js/components/nav/NavBar.vue":
+/*!************************************************!*\
+  !*** ./resources/js/components/nav/NavBar.vue ***!
+  \************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _NavBar_vue_vue_type_template_id_38d5e5f2___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./NavBar.vue?vue&type=template&id=38d5e5f2& */ "./resources/js/components/nav/NavBar.vue?vue&type=template&id=38d5e5f2&");
+/* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
+
+var script = {}
+
+
+/* normalize component */
+
+var component = Object(_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_1__["default"])(
+  script,
+  _NavBar_vue_vue_type_template_id_38d5e5f2___WEBPACK_IMPORTED_MODULE_0__["render"],
+  _NavBar_vue_vue_type_template_id_38d5e5f2___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"],
+  false,
+  null,
+  null,
+  null
+  
+)
+
+/* hot reload */
+if (false) { var api; }
+component.options.__file = "resources/js/components/nav/NavBar.vue"
+/* harmony default export */ __webpack_exports__["default"] = (component.exports);
+
+/***/ }),
+
+/***/ "./resources/js/components/nav/NavBar.vue?vue&type=template&id=38d5e5f2&":
+/*!*******************************************************************************!*\
+  !*** ./resources/js/components/nav/NavBar.vue?vue&type=template&id=38d5e5f2& ***!
+  \*******************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_NavBar_vue_vue_type_template_id_38d5e5f2___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../../node_modules/vue-loader/lib??vue-loader-options!./NavBar.vue?vue&type=template&id=38d5e5f2& */ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/nav/NavBar.vue?vue&type=template&id=38d5e5f2&");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_NavBar_vue_vue_type_template_id_38d5e5f2___WEBPACK_IMPORTED_MODULE_0__["render"]; });
+
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_NavBar_vue_vue_type_template_id_38d5e5f2___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
 
 
 
